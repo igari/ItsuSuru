@@ -305,12 +305,12 @@ export const fetchEvent = onRequestWrapper(async (req, res): Promise<void> => {
           }
         })()
 
-        const time = event.noSpecificTime 
-          ? '' 
+        const time = event.noSpecificTime
+          ? ''
           : event.candidateTimes[date] || event.baseTime
-        
-        const dateInstance = event.noSpecificTime 
-          ? new Date(`${date}T00:00:00`) 
+
+        const dateInstance = event.noSpecificTime
+          ? new Date(`${date}T00:00:00`)
           : new Date(`${date}T${time}`)
 
         return {
@@ -467,12 +467,12 @@ export const responseEvent = onRequestWrapper(
 
 export const deleteParticipant = onRequestWrapper(
   async (req, res): Promise<void> => {
-    const eventId = req.query.eventId as string;
-    const participantId = req.query.participantId as string;
+    const eventId = req.query.eventId as string
+    const participantId = req.query.participantId as string
 
     if (!eventId || !participantId) {
-      res.status(400).send('Bad Request');
-      return;
+      res.status(400).send('Bad Request')
+      return
     }
 
     await db
@@ -482,11 +482,11 @@ export const deleteParticipant = onRequestWrapper(
       .doc(participantId)
       .delete()
       .then(() => {
-        res.set('HX-Location', `/event?eventId=${eventId}`);
-        res.sendStatus(200);
-      });
+        res.set('HX-Location', `/event?eventId=${eventId}`)
+        res.sendStatus(200)
+      })
   }
-);
+)
 
 export const ogpImage = onRequestWrapper(async (req, res) => {
   const size = { width: 1200, height: 630 }
