@@ -41,13 +41,16 @@
         <div class="base-time-selector">
           <div>
             <input type="time" id="base-time" name="baseTime" value="{{ event.baseTime }}" 
-                {% if event.timeByDay %} disabled{% endif %} required/>
+                {% if event.timeByDay %} disabled{% endif %} {% if event.noSpecificTime %} disabled{% endif %} required/>
           </div>
           <div>
             <input type="checkbox" name="timeByDay" id="time-by-day"{% if event.timeByDay %} checked{% endif %}/>
             <label for="time-by-day">←を基準に日毎に設定</label>
           </div>
-
+          <div>
+            <input type="checkbox" name="noSpecificTime" id="no-specific-time"{% if event.noSpecificTime %} checked{% endif %}/>
+            <label for="no-specific-time">時間指定なし</label>
+          </div>
         </div>
         <div id="event-time">
           <!-- Will replace to list element immediately with `template#event-time-template` parsed by form data -->

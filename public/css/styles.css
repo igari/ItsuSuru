@@ -157,6 +157,50 @@ body {
   }
 }
 
+/* Tablet devices */
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  table {
+    min-width: 100%;
+  }
+  
+  .event-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .event-header h2 {
+    margin-bottom: 0;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem;
+  }
+  
+  .header__logo {
+    font-size: 1.5rem;
+  }
+  
+  .header__tagline {
+    font-size: 0.9rem;
+  }
+  
+  .form-field {
+    padding: 0.75rem;
+  }
+  
+  .candidate-dates {
+    padding: 0;
+  }
+}
+
 .header {
   display: flex;
   height: 72px;
@@ -519,6 +563,17 @@ table td {
 
 .icon-response {
   fill: var(--color-fg-base);
+}
+
+.delete-button {
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  text-decoration: none;
+  opacity: 0.7;
+}
+.delete-button:hover {
+  opacity: 1;
 }
 
 .loading-overlay {

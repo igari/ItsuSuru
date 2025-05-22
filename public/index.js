@@ -47,6 +47,7 @@ function initHomePage() {
   const datepickerEl = document.getElementById('datepicker')
   const baseTimeEl = document.getElementById('base-time')
   const timeByDayEl = document.getElementById('time-by-day')
+  const noSpecificTimeEl = document.getElementById('no-specific-time')
 
   const DEFAULT_TIME = '19:00'
 
@@ -62,6 +63,12 @@ function initHomePage() {
 
   timeByDayEl.addEventListener('change', (e) => {
     baseTimeEl.disabled = e.target.checked
+    parseCandidateDates(fp.input.value)
+  })
+  
+  noSpecificTimeEl.addEventListener('change', (e) => {
+    baseTimeEl.disabled = e.target.checked
+    timeByDayEl.disabled = e.target.checked
     parseCandidateDates(fp.input.value)
   })
 
@@ -86,7 +93,9 @@ function initHomePage() {
 
   function parseCandidateDates(dateStr) {
     const isTimeByDay = document.getElementById('time-by-day').checked
-    if (!isTimeByDay || !dateStr) {
+    const isNoSpecificTime = document.getElementById('no-specific-time').checked
+    
+    if ((!isTimeByDay && !isNoSpecificTime) || !dateStr) {
       document.getElementById('event-time').innerHTML = ''
       return
     }
@@ -100,9 +109,11 @@ function initHomePage() {
       .split(', ')
       .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
       .map((date) => {
-        const time = isTimeByDay
-          ? data[`candidateTimes[${date}]`] || baseTime
-          : baseTime
+        const time = isNoSpecificTime 
+          ? '' 
+          : isTimeByDay
+            ? data[`candidateTimes[${date}]`] || baseTime
+            : baseTime
         return {
           key: date,
           date: format(new Date(date), 'yyyy/MM/dd'),

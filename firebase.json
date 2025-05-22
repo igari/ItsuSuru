@@ -50,6 +50,10 @@
         "function": "responseEvent"
       },
       {
+        "source": "/api/deleteParticipant",
+        "function": "deleteParticipant"
+      },
+      {
         "source": "/api/ogpImage",
         "function": "ogpImage"
       }
@@ -93,6 +97,10 @@
         {
           "source": "/api/responseEvent",
           "function": "responseEvent"
+        },
+        {
+          "source": "/api/deleteParticipant",
+          "function": "deleteParticipant"
         },
         {
           "source": "/api/ogpImage",

@@ -69,6 +69,9 @@
                 <a href="/edit?eventId={{event.id}}&participantId={{ p.id }}" hx-boost="true">
                   {{ p.name }}
                 </a>
+                <a href="/api/deleteParticipant?eventId={{event.id}}&participantId={{ p.id }}" 
+                   class="delete-button" 
+                   hx-confirm="削除してもよろしいですか？">✕</a>
               </th>
 
               {% for c in event.candidateDates %}

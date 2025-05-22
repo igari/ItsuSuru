@@ -117,6 +117,7 @@ export const createEvent = onRequestWrapper(async (req, res): Promise<void> => {
     candidateTimes: data.candidateTimes || {},
     timeByDay: data.timeByDay === 'on',
     baseTime: data.baseTime || '',
+    noSpecificTime: data.noSpecificTime === 'on',
     createdAt: FieldValue.serverTimestamp(),
   }
 
@@ -140,6 +141,7 @@ export const updateEvent = onRequestWrapper(async (req, res): Promise<void> => {
     candidateTimes: data.candidateTimes || {},
     timeByDay: data.timeByDay === 'on',
     baseTime: data.baseTime || '',
+    noSpecificTime: data.noSpecificTime === 'on',
   }
 
   const eventReference = db.collection('events').doc(data.eventId)
@@ -303,8 +305,13 @@ export const fetchEvent = onRequestWrapper(async (req, res): Promise<void> => {
           }
         })()
 
-        const time = event.candidateTimes[date] || event.baseTime
-        const dateInstance = new Date(`${date}T${time}`)
+        const time = event.noSpecificTime 
+          ? '' 
+          : event.candidateTimes[date] || event.baseTime
+        
+        const dateInstance = event.noSpecificTime 
+          ? new Date(`${date}T00:00:00`) 
+          : new Date(`${date}T${time}`)
 
         return {
           key: `${date}T${time}`,
@@ -457,6 +464,29 @@ export const responseEvent = onRequestWrapper(
     }
   }
 )
+
+export const deleteParticipant = onRequestWrapper(
+  async (req, res): Promise<void> => {
+    const eventId = req.query.eventId as string;
+    const participantId = req.query.participantId as string;
+
+    if (!eventId || !participantId) {
+      res.status(400).send('Bad Request');
+      return;
+    }
+
+    await db
+      .collection('events')
+      .doc(eventId)
+      .collection('participants')
+      .doc(participantId)
+      .delete()
+      .then(() => {
+        res.set('HX-Location', `/event?eventId=${eventId}`);
+        res.sendStatus(200);
+      });
+  }
+);
 
 export const ogpImage = onRequestWrapper(async (req, res) => {
   const size = { width: 1200, height: 630 }

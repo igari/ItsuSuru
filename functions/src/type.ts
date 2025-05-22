@@ -19,6 +19,7 @@ export interface EventData {
   candidateTimes: { [date: string]: string }
   timeByDay: boolean
   baseTime: string
+  noSpecificTime?: boolean
   createdAt?: FieldValue
 }
 export interface EventDataWithId extends EventData {
@@ -31,6 +32,7 @@ export interface CreateEventRequestParams {
   candidateTimes?: { [date: string]: string }
   timeByDay?: string
   baseTime?: string
+  noSpecificTime?: string
 }
 
 export interface UpdateEventRequestParams {
@@ -40,6 +42,7 @@ export interface UpdateEventRequestParams {
   candidateTimes?: { [date: string]: string }
   timeByDay?: string
   baseTime?: string
+  noSpecificTime?: string
 }
 
 export interface ResponseEventRequestParams {
